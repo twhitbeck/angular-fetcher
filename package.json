@@ -1,0 +1,19 @@
+{
+  "name": "angular-fetcher",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/twhitbeck/angular-fetcher.git"
+  },
+  "author": "Tim Whitbeck <twhitbeck@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/twhitbeck/angular-fetcher/issues"
+  },
+  "homepage": "https://github.com/twhitbeck/angular-fetcher",
+  "devDependencies": {
+    "connect": "^3.0.1",
+    "gulp": "^3.8.1",
+    "serve-static": "^1.2.3"
+  }
+}

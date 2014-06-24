@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="testApp">
+  <head>
+    <title>Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <body ng-controller="MainCtrl">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Basic local fetch</h1>
+          <input type="text" class="form-control" ng-model="query1" tw-fetcher="fetchItems($query)" model="items">
+
+          <h3>Matching items for '{{query1}}'</h3>
+          <ul>
+            <li ng-repeat="item in items">
+              {{item.name}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Simulated debounced remote fetch</h1>
+
+          <input type="text" class="form-control" ng-model="remoteQuery" tw-fetcher="fetchRemote($query)" model="remoteItems">
+
+          <h3>Matching items for '{{remoteQuery}}'</h3>
+          <ul>
+            <li ng-repeat="item in remoteItems">
+              {{item.name}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../angular-fetcher.js"></script>
+
+    <script>
+      angular.module('testApp', ['tw.directives.fetcher']).
+      controller('MainCtrl', function($scope, $timeout, $filter) {
+        var items = [
+          {
+            name: 'Furniture'
+          },
+          {
+            name: 'Pasta'
+          },
+          {
+            name: 'Car'
+          },
+          {
+            name: 'Fruit'
+          }
+        ];
+
+        var filter = $filter('filter');
+        $scope.fetchItems = function fetchItems(query) {
+          return filter(items, query);
+        };
+
+        var timeout;
+        $scope.fetchRemote = function(query) {
+          console.log('query is now \'%s\'', query);
+
+          $timeout.cancel(timeout);
+
+          if (!query || query.length < 2) {
+            console.log('not at least 2 chars, returning []');
+            return [];
+          }
+
+          console.log('waiting to perform remote query');
+          // This outer timeout debounces the request
+          return timeout = $timeout(function() {
+            console.log('initiating request for query \'%s\'', query);
+            // This inner timeout simulates a remote request (might use $http here)
+            return $timeout(function() {
+              console.log('returning results for \'%s\'', query);
+              return filter(items, query);
+            }, 750);
+          }, 500);
+        };
+      });
+    </script>
+  </body>
+</html>
