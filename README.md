@@ -12,7 +12,7 @@ A versatile directive for fetching items. Useful for typeahead/autocomplete func
 - Add `tw-fetcher` attribute to your input and point it to a function which takes one paramater, `$query` and returns either your data or a promise which will resolve to your data.
 
 ### Recipes
-#### Local data
+#### Local data [example plunk](http://plnkr.co/edit/Tm5WSSJegaSBTJzVFLDz?p=preview)
 ```html
 <input type="text" ng-model="colorQuery" tw-fetcher="fetchMatchingColors($query)" model="matchingColors">
 
