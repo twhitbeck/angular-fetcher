@@ -1,5 +1,5 @@
 angular.module('tw.directives.fetcher', []).
-directive('twFetcher', function($parse) {
+directive('twFetcher', ['$parse', function($parse) {
   'use strict';
 
   return {
@@ -43,4 +43,4 @@ directive('twFetcher', function($parse) {
       }
     }
   };
-});
+}]);
